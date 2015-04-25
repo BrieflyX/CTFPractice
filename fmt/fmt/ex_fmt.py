@@ -4,6 +4,9 @@ from zio import *
 from struct import pack
 import os
 
+# simple format string exploitation
+# buffer is at the stack
+
 target = './fmt'
 flag_addr = 0x804a02c
 
