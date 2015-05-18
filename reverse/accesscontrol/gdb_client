@@ -1,0 +1,28 @@
+file client
+set args 54.84.39.118 
+b *0x804893e
+b *0x804896b
+b *0x8048bb9
+r
+set {char}0x8049164=100
+set {char}0x8049165=117
+set {char}0x8049166=99
+set {char}0x8049167=104
+set {char}0x8049168=101
+set {char}0x8049169=115
+set {char}0x804916a=115
+set {char}0x804916b=10
+set {char}0x804916c=0
+c
+set {char}0x804916c=100
+set {char}0x804916d=117
+set {char}0x804916e=99
+set {char}0x804916f=104
+set {char}0x8049170=101
+set {char}0x8049171=115
+set {char}0x8049172=115
+set {char}0x8049173=0
+set {int}0x804b468=3
+c
+set $eip=0x8048bcd
+c
